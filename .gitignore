@@ -6,3 +6,4 @@ _vegafusion_data
 vegafusion-server*
 node_modules
 /apps/vegafusion-editor-grpc-web/datasets/
+dist/
