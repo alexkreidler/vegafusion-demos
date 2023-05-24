@@ -6,7 +6,7 @@ import requireTransform from 'vite-plugin-require-transform';
 
 export default defineConfig({
     plugins: [
-        requireTransform(),
+        // requireTransform(),
         monacoEditorPlugin.default({}),
     wasm(),
     topLevelAwait()],

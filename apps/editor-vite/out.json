@@ -1,0 +1,1370 @@
+{
+  "taskGraphValues": {
+    "taskGraph": {
+      "nodes": [
+        {
+          "task": {
+            "variable": {
+              "name": "source_0",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataUrl": {
+              "string": "datasets/flights_200k.feather",
+              "batchSize": 8096,
+              "formatType": {
+                "type": "json",
+                "object": {
+                  "specs": [
+                    {
+                      "name": "date",
+                      "datatype": "date"
+                    }
+                  ]
+                },
+                "header": []
+              },
+              "pipeline": {
+                "transforms": [
+                  {
+                    "extent": {
+                      "field": "delay",
+                      "signal": "child__column_delay_layer_1_bin_maxbins_20_delay_extent"
+                    }
+                  },
+                  {
+                    "bin": {
+                      "field": "delay",
+                      "extent": {
+                        "identifier": {
+                          "name": "child__column_delay_layer_1_bin_maxbins_20_delay_extent"
+                        },
+                        "span": {
+                          "start": 0,
+                          "end": 55
+                        }
+                      },
+                      "signal": "child__column_delay_layer_1_bin_maxbins_20_delay_bins",
+                      "alias0": "bin_maxbins_20_delay",
+                      "alias1": "bin_maxbins_20_delay_end",
+                      "maxbins": 20,
+                      "base": 10,
+                      "steps": [],
+                      "minstep": 0,
+                      "divide": [5, 2],
+                      "nice": true
+                    }
+                  },
+                  {
+                    "extent": {
+                      "field": "distance",
+                      "signal": "child__column_distance_layer_0_bin_maxbins_20_distance_extent"
+                    }
+                  },
+                  {
+                    "bin": {
+                      "field": "distance",
+                      "extent": {
+                        "identifier": {
+                          "name": "child__column_distance_layer_0_bin_maxbins_20_distance_extent"
+                        },
+                        "span": {
+                          "start": 0,
+                          "end": 61
+                        }
+                      },
+                      "signal": "child__column_distance_layer_0_bin_maxbins_20_distance_bins",
+                      "alias0": "bin_maxbins_20_distance",
+                      "alias1": "bin_maxbins_20_distance_end",
+                      "maxbins": 20,
+                      "base": 10,
+                      "steps": [],
+                      "minstep": 0,
+                      "divide": [5, 2],
+                      "nice": true
+                    }
+                  },
+                  {
+                    "formula": {
+                      "expr": {
+                        "call": {
+                          "callee": "hours",
+                          "arguments": [
+                            {
+                              "member": {
+                                "object": {
+                                  "identifier": {
+                                    "name": "datum"
+                                  },
+                                  "span": {
+                                    "start": 6,
+                                    "end": 11
+                                  }
+                                },
+                                "property": {
+                                  "identifier": {
+                                    "name": "date"
+                                  },
+                                  "span": {
+                                    "start": 12,
+                                    "end": 16
+                                  }
+                                },
+                                "computed": false
+                              },
+                              "span": {
+                                "start": 11,
+                                "end": 16
+                              }
+                            }
+                          ]
+                        },
+                        "span": {
+                          "start": 5,
+                          "end": 17
+                        }
+                      },
+                      "as": "time"
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": [
+                        "bin_maxbins_20_delay",
+                        "bin_maxbins_20_delay_end",
+                        "bin_maxbins_20_distance",
+                        "bin_maxbins_20_distance_end",
+                        "delay",
+                        "distance",
+                        "time"
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [],
+          "outgoing": [
+            {
+              "target": 1,
+              "propagate": true
+            },
+            {
+              "target": 3,
+              "propagate": true
+            },
+            {
+              "target": 4,
+              "propagate": true
+            },
+            {
+              "target": 7,
+              "propagate": true
+            }
+          ],
+          "idFingerprint": "15252144215097646283",
+          "stateFingerprint": "16405339493632826225"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_0",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "source_0",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "extent": {
+                      "field": "time",
+                      "signal": "child__column_time_layer_1_bin_maxbins_20_time_extent"
+                    }
+                  },
+                  {
+                    "bin": {
+                      "field": "time",
+                      "extent": {
+                        "identifier": {
+                          "name": "child__column_time_layer_1_bin_maxbins_20_time_extent"
+                        },
+                        "span": {
+                          "start": 0,
+                          "end": 53
+                        }
+                      },
+                      "signal": "child__column_time_layer_1_bin_maxbins_20_time_bins",
+                      "alias0": "bin_maxbins_20_time",
+                      "alias1": "bin_maxbins_20_time_end",
+                      "maxbins": 20,
+                      "base": 10,
+                      "steps": [],
+                      "minstep": 0,
+                      "divide": [5, 2],
+                      "nice": true
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": ["bin_maxbins_20_time", "bin_maxbins_20_time_end", "delay", "distance", "time"]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 0
+            }
+          ],
+          "outgoing": [
+            {
+              "target": 6,
+              "propagate": true
+            },
+            {
+              "target": 2,
+              "propagate": true
+            }
+          ],
+          "idFingerprint": "17246449236731598269",
+          "stateFingerprint": "13801336784416046489"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_2",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "data_0",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "aggregate": {
+                      "groupby": ["bin_maxbins_20_time", "bin_maxbins_20_time_end"],
+                      "fields": [""],
+                      "aliases": ["__count"],
+                      "ops": ["Count"]
+                    }
+                  },
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "call": {
+                              "callee": "isValid",
+                              "arguments": [
+                                {
+                                  "member": {
+                                    "object": {
+                                      "identifier": {
+                                        "name": "datum"
+                                      },
+                                      "span": {
+                                        "start": 8,
+                                        "end": 13
+                                      }
+                                    },
+                                    "property": {
+                                      "literal": {
+                                        "raw": "\"bin_maxbins_20_time\"",
+                                        "string": "bin_maxbins_20_time"
+                                      },
+                                      "span": {
+                                        "start": 14,
+                                        "end": 35
+                                      }
+                                    },
+                                    "computed": true
+                                  },
+                                  "span": {
+                                    "start": 13,
+                                    "end": 36
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 7,
+                              "end": 37
+                            }
+                          },
+                          "operator": "And",
+                          "right": {
+                            "call": {
+                              "callee": "isFinite",
+                              "arguments": [
+                                {
+                                  "unary": {
+                                    "operator": "Pos",
+                                    "prefix": true,
+                                    "argument": {
+                                      "member": {
+                                        "object": {
+                                          "identifier": {
+                                            "name": "datum"
+                                          },
+                                          "span": {
+                                            "start": 51,
+                                            "end": 56
+                                          }
+                                        },
+                                        "property": {
+                                          "literal": {
+                                            "raw": "\"bin_maxbins_20_time\"",
+                                            "string": "bin_maxbins_20_time"
+                                          },
+                                          "span": {
+                                            "start": 57,
+                                            "end": 78
+                                          }
+                                        },
+                                        "computed": true
+                                      },
+                                      "span": {
+                                        "start": 56,
+                                        "end": 79
+                                      }
+                                    }
+                                  },
+                                  "span": {
+                                    "start": 50,
+                                    "end": 79
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 49,
+                              "end": 80
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 38,
+                          "end": 80
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": ["__count", "bin_maxbins_20_time", "bin_maxbins_20_time_end"]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 1
+            }
+          ],
+          "outgoing": [],
+          "idFingerprint": "1133249910288457267",
+          "stateFingerprint": "13514995228522126608"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_6",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "source_0",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "aggregate": {
+                      "groupby": ["bin_maxbins_20_distance", "bin_maxbins_20_distance_end"],
+                      "fields": [""],
+                      "aliases": ["__count"],
+                      "ops": ["Count"]
+                    }
+                  },
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "call": {
+                              "callee": "isValid",
+                              "arguments": [
+                                {
+                                  "member": {
+                                    "object": {
+                                      "identifier": {
+                                        "name": "datum"
+                                      },
+                                      "span": {
+                                        "start": 8,
+                                        "end": 13
+                                      }
+                                    },
+                                    "property": {
+                                      "literal": {
+                                        "raw": "\"bin_maxbins_20_distance\"",
+                                        "string": "bin_maxbins_20_distance"
+                                      },
+                                      "span": {
+                                        "start": 14,
+                                        "end": 39
+                                      }
+                                    },
+                                    "computed": true
+                                  },
+                                  "span": {
+                                    "start": 13,
+                                    "end": 40
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 7,
+                              "end": 41
+                            }
+                          },
+                          "operator": "And",
+                          "right": {
+                            "call": {
+                              "callee": "isFinite",
+                              "arguments": [
+                                {
+                                  "unary": {
+                                    "operator": "Pos",
+                                    "prefix": true,
+                                    "argument": {
+                                      "member": {
+                                        "object": {
+                                          "identifier": {
+                                            "name": "datum"
+                                          },
+                                          "span": {
+                                            "start": 55,
+                                            "end": 60
+                                          }
+                                        },
+                                        "property": {
+                                          "literal": {
+                                            "raw": "\"bin_maxbins_20_distance\"",
+                                            "string": "bin_maxbins_20_distance"
+                                          },
+                                          "span": {
+                                            "start": 61,
+                                            "end": 86
+                                          }
+                                        },
+                                        "computed": true
+                                      },
+                                      "span": {
+                                        "start": 60,
+                                        "end": 87
+                                      }
+                                    }
+                                  },
+                                  "span": {
+                                    "start": 54,
+                                    "end": 87
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 53,
+                              "end": 88
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 42,
+                          "end": 88
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": ["__count", "bin_maxbins_20_distance", "bin_maxbins_20_distance_end"]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 0
+            }
+          ],
+          "outgoing": [],
+          "idFingerprint": "4899205484562405265",
+          "stateFingerprint": "405923843209246147"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_7",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "source_0",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "aggregate": {
+                      "groupby": ["bin_maxbins_20_delay", "bin_maxbins_20_delay_end"],
+                      "fields": [""],
+                      "aliases": ["__count"],
+                      "ops": ["Count"]
+                    }
+                  },
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "call": {
+                              "callee": "isValid",
+                              "arguments": [
+                                {
+                                  "member": {
+                                    "object": {
+                                      "identifier": {
+                                        "name": "datum"
+                                      },
+                                      "span": {
+                                        "start": 8,
+                                        "end": 13
+                                      }
+                                    },
+                                    "property": {
+                                      "literal": {
+                                        "raw": "\"bin_maxbins_20_delay\"",
+                                        "string": "bin_maxbins_20_delay"
+                                      },
+                                      "span": {
+                                        "start": 14,
+                                        "end": 36
+                                      }
+                                    },
+                                    "computed": true
+                                  },
+                                  "span": {
+                                    "start": 13,
+                                    "end": 37
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 7,
+                              "end": 38
+                            }
+                          },
+                          "operator": "And",
+                          "right": {
+                            "call": {
+                              "callee": "isFinite",
+                              "arguments": [
+                                {
+                                  "unary": {
+                                    "operator": "Pos",
+                                    "prefix": true,
+                                    "argument": {
+                                      "member": {
+                                        "object": {
+                                          "identifier": {
+                                            "name": "datum"
+                                          },
+                                          "span": {
+                                            "start": 52,
+                                            "end": 57
+                                          }
+                                        },
+                                        "property": {
+                                          "literal": {
+                                            "raw": "\"bin_maxbins_20_delay\"",
+                                            "string": "bin_maxbins_20_delay"
+                                          },
+                                          "span": {
+                                            "start": 58,
+                                            "end": 80
+                                          }
+                                        },
+                                        "computed": true
+                                      },
+                                      "span": {
+                                        "start": 57,
+                                        "end": 81
+                                      }
+                                    }
+                                  },
+                                  "span": {
+                                    "start": 51,
+                                    "end": 81
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 50,
+                              "end": 82
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 39,
+                          "end": 82
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": ["__count", "bin_maxbins_20_delay", "bin_maxbins_20_delay_end"]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 0
+            }
+          ],
+          "outgoing": [],
+          "idFingerprint": "12778192423378315927",
+          "stateFingerprint": "6336904491727899862"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "brush_store",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "value": {
+              "table": "/////7gAAAAQAAAAAAAKAAwACgAJAAQACgAAABAAAAAAAQQACAAIAAAABAAIAAAABAAAAAEAAAAUAAAAEAAWABAADgAPAAQAAAAIABAAAAAYAAAAHAAAAAAAAQIYAAAAAAAGAAgABAAGAAAAQAAAAAAAAAAJAAAAX3ZmX29yZGVyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////3gAAAAQAAAAAAAKAA4ADAALAAQACgAAABQAAAAAAAADBAAKAAwAAAAIAAQACgAAABwAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AAAAAA=="
+            }
+          },
+          "incoming": [],
+          "outgoing": [
+            {
+              "target": 6,
+              "propagate": true
+            },
+            {
+              "target": 7,
+              "propagate": true
+            }
+          ],
+          "idFingerprint": "9039828775949226570",
+          "stateFingerprint": "4555970599335604825"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_1",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "data_0",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "unary": {
+                              "operator": "Not",
+                              "prefix": true,
+                              "argument": {
+                                "call": {
+                                  "callee": "length",
+                                  "arguments": [
+                                    {
+                                      "call": {
+                                        "callee": "data",
+                                        "arguments": [
+                                          {
+                                            "literal": {
+                                              "raw": "\"brush_store\"",
+                                              "string": "brush_store"
+                                            },
+                                            "span": {
+                                              "start": 13,
+                                              "end": 26
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "span": {
+                                        "start": 12,
+                                        "end": 27
+                                      }
+                                    }
+                                  ]
+                                },
+                                "span": {
+                                  "start": 7,
+                                  "end": 28
+                                }
+                              }
+                            },
+                            "span": {
+                              "start": 0,
+                              "end": 28
+                            }
+                          },
+                          "operator": "Or",
+                          "right": {
+                            "call": {
+                              "callee": "vlSelectionTest",
+                              "arguments": [
+                                {
+                                  "literal": {
+                                    "raw": "\"brush_store\"",
+                                    "string": "brush_store"
+                                  },
+                                  "span": {
+                                    "start": 48,
+                                    "end": 61
+                                  }
+                                },
+                                {
+                                  "identifier": {
+                                    "name": "datum"
+                                  },
+                                  "span": {
+                                    "start": 63,
+                                    "end": 68
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 47,
+                              "end": 69
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 29,
+                          "end": 69
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "aggregate": {
+                      "groupby": ["bin_maxbins_20_time", "bin_maxbins_20_time_end"],
+                      "fields": [""],
+                      "aliases": ["__count"],
+                      "ops": ["Count"]
+                    }
+                  },
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "call": {
+                              "callee": "isValid",
+                              "arguments": [
+                                {
+                                  "member": {
+                                    "object": {
+                                      "identifier": {
+                                        "name": "datum"
+                                      },
+                                      "span": {
+                                        "start": 8,
+                                        "end": 13
+                                      }
+                                    },
+                                    "property": {
+                                      "literal": {
+                                        "raw": "\"bin_maxbins_20_time\"",
+                                        "string": "bin_maxbins_20_time"
+                                      },
+                                      "span": {
+                                        "start": 14,
+                                        "end": 35
+                                      }
+                                    },
+                                    "computed": true
+                                  },
+                                  "span": {
+                                    "start": 13,
+                                    "end": 36
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 7,
+                              "end": 37
+                            }
+                          },
+                          "operator": "And",
+                          "right": {
+                            "call": {
+                              "callee": "isFinite",
+                              "arguments": [
+                                {
+                                  "unary": {
+                                    "operator": "Pos",
+                                    "prefix": true,
+                                    "argument": {
+                                      "member": {
+                                        "object": {
+                                          "identifier": {
+                                            "name": "datum"
+                                          },
+                                          "span": {
+                                            "start": 51,
+                                            "end": 56
+                                          }
+                                        },
+                                        "property": {
+                                          "literal": {
+                                            "raw": "\"bin_maxbins_20_time\"",
+                                            "string": "bin_maxbins_20_time"
+                                          },
+                                          "span": {
+                                            "start": 57,
+                                            "end": 78
+                                          }
+                                        },
+                                        "computed": true
+                                      },
+                                      "span": {
+                                        "start": 56,
+                                        "end": 79
+                                      }
+                                    }
+                                  },
+                                  "span": {
+                                    "start": 50,
+                                    "end": 79
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 49,
+                              "end": 80
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 38,
+                          "end": 80
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": ["__count", "bin_maxbins_20_time", "bin_maxbins_20_time_end"]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 5
+            },
+            {
+              "source": 1
+            }
+          ],
+          "outgoing": [],
+          "idFingerprint": "3300316139472682015",
+          "stateFingerprint": "13830707243597989704"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_3",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "source_0",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "unary": {
+                              "operator": "Not",
+                              "prefix": true,
+                              "argument": {
+                                "call": {
+                                  "callee": "length",
+                                  "arguments": [
+                                    {
+                                      "call": {
+                                        "callee": "data",
+                                        "arguments": [
+                                          {
+                                            "literal": {
+                                              "raw": "\"brush_store\"",
+                                              "string": "brush_store"
+                                            },
+                                            "span": {
+                                              "start": 13,
+                                              "end": 26
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "span": {
+                                        "start": 12,
+                                        "end": 27
+                                      }
+                                    }
+                                  ]
+                                },
+                                "span": {
+                                  "start": 7,
+                                  "end": 28
+                                }
+                              }
+                            },
+                            "span": {
+                              "start": 0,
+                              "end": 28
+                            }
+                          },
+                          "operator": "Or",
+                          "right": {
+                            "call": {
+                              "callee": "vlSelectionTest",
+                              "arguments": [
+                                {
+                                  "literal": {
+                                    "raw": "\"brush_store\"",
+                                    "string": "brush_store"
+                                  },
+                                  "span": {
+                                    "start": 48,
+                                    "end": 61
+                                  }
+                                },
+                                {
+                                  "identifier": {
+                                    "name": "datum"
+                                  },
+                                  "span": {
+                                    "start": 63,
+                                    "end": 68
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 47,
+                              "end": 69
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 29,
+                          "end": 69
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": [
+                        "bin_maxbins_20_delay",
+                        "bin_maxbins_20_delay_end",
+                        "bin_maxbins_20_distance",
+                        "bin_maxbins_20_distance_end"
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 5
+            },
+            {
+              "source": 0
+            }
+          ],
+          "outgoing": [
+            {
+              "target": 8,
+              "propagate": true
+            },
+            {
+              "target": 9,
+              "propagate": true
+            }
+          ],
+          "idFingerprint": "4607849937117823293",
+          "stateFingerprint": "482302819772567904"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_4",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "data_3",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "aggregate": {
+                      "groupby": ["bin_maxbins_20_delay", "bin_maxbins_20_delay_end"],
+                      "fields": [""],
+                      "aliases": ["__count"],
+                      "ops": ["Count"]
+                    }
+                  },
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "call": {
+                              "callee": "isValid",
+                              "arguments": [
+                                {
+                                  "member": {
+                                    "object": {
+                                      "identifier": {
+                                        "name": "datum"
+                                      },
+                                      "span": {
+                                        "start": 8,
+                                        "end": 13
+                                      }
+                                    },
+                                    "property": {
+                                      "literal": {
+                                        "raw": "\"bin_maxbins_20_delay\"",
+                                        "string": "bin_maxbins_20_delay"
+                                      },
+                                      "span": {
+                                        "start": 14,
+                                        "end": 36
+                                      }
+                                    },
+                                    "computed": true
+                                  },
+                                  "span": {
+                                    "start": 13,
+                                    "end": 37
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 7,
+                              "end": 38
+                            }
+                          },
+                          "operator": "And",
+                          "right": {
+                            "call": {
+                              "callee": "isFinite",
+                              "arguments": [
+                                {
+                                  "unary": {
+                                    "operator": "Pos",
+                                    "prefix": true,
+                                    "argument": {
+                                      "member": {
+                                        "object": {
+                                          "identifier": {
+                                            "name": "datum"
+                                          },
+                                          "span": {
+                                            "start": 52,
+                                            "end": 57
+                                          }
+                                        },
+                                        "property": {
+                                          "literal": {
+                                            "raw": "\"bin_maxbins_20_delay\"",
+                                            "string": "bin_maxbins_20_delay"
+                                          },
+                                          "span": {
+                                            "start": 58,
+                                            "end": 80
+                                          }
+                                        },
+                                        "computed": true
+                                      },
+                                      "span": {
+                                        "start": 57,
+                                        "end": 81
+                                      }
+                                    }
+                                  },
+                                  "span": {
+                                    "start": 51,
+                                    "end": 81
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 50,
+                              "end": 82
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 39,
+                          "end": 82
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": ["__count", "bin_maxbins_20_delay", "bin_maxbins_20_delay_end"]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 7
+            }
+          ],
+          "outgoing": [],
+          "idFingerprint": "2191264431392654690",
+          "stateFingerprint": "10097702671862307837"
+        },
+        {
+          "task": {
+            "variable": {
+              "name": "data_5",
+              "namespace": "Data"
+            },
+            "scope": [],
+            "dataSource": {
+              "source": "data_3",
+              "pipeline": {
+                "transforms": [
+                  {
+                    "aggregate": {
+                      "groupby": ["bin_maxbins_20_distance", "bin_maxbins_20_distance_end"],
+                      "fields": [""],
+                      "aliases": ["__count"],
+                      "ops": ["Count"]
+                    }
+                  },
+                  {
+                    "filter": {
+                      "expr": {
+                        "logical": {
+                          "left": {
+                            "call": {
+                              "callee": "isValid",
+                              "arguments": [
+                                {
+                                  "member": {
+                                    "object": {
+                                      "identifier": {
+                                        "name": "datum"
+                                      },
+                                      "span": {
+                                        "start": 8,
+                                        "end": 13
+                                      }
+                                    },
+                                    "property": {
+                                      "literal": {
+                                        "raw": "\"bin_maxbins_20_distance\"",
+                                        "string": "bin_maxbins_20_distance"
+                                      },
+                                      "span": {
+                                        "start": 14,
+                                        "end": 39
+                                      }
+                                    },
+                                    "computed": true
+                                  },
+                                  "span": {
+                                    "start": 13,
+                                    "end": 40
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 7,
+                              "end": 41
+                            }
+                          },
+                          "operator": "And",
+                          "right": {
+                            "call": {
+                              "callee": "isFinite",
+                              "arguments": [
+                                {
+                                  "unary": {
+                                    "operator": "Pos",
+                                    "prefix": true,
+                                    "argument": {
+                                      "member": {
+                                        "object": {
+                                          "identifier": {
+                                            "name": "datum"
+                                          },
+                                          "span": {
+                                            "start": 55,
+                                            "end": 60
+                                          }
+                                        },
+                                        "property": {
+                                          "literal": {
+                                            "raw": "\"bin_maxbins_20_distance\"",
+                                            "string": "bin_maxbins_20_distance"
+                                          },
+                                          "span": {
+                                            "start": 61,
+                                            "end": 86
+                                          }
+                                        },
+                                        "computed": true
+                                      },
+                                      "span": {
+                                        "start": 60,
+                                        "end": 87
+                                      }
+                                    }
+                                  },
+                                  "span": {
+                                    "start": 54,
+                                    "end": 87
+                                  }
+                                }
+                              ]
+                            },
+                            "span": {
+                              "start": 53,
+                              "end": 88
+                            }
+                          }
+                        },
+                        "span": {
+                          "start": 42,
+                          "end": 88
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "project": {
+                      "fields": ["__count", "bin_maxbins_20_distance", "bin_maxbins_20_distance_end"]
+                    }
+                  }
+                ]
+              }
+            },
+            "tzConfig": {
+              "localTz": "America/New_York"
+            }
+          },
+          "incoming": [
+            {
+              "source": 7
+            }
+          ],
+          "outgoing": [],
+          "idFingerprint": "15693698402451147607",
+          "stateFingerprint": "2839407114543909948"
+        }
+      ]
+    },
+    "indices": [
+      {
+        "nodeIndex": 8
+      },
+      {
+        "nodeIndex": 0,
+        "outputIndex": 2
+      },
+      {
+        "nodeIndex": 6
+      },
+      {
+        "nodeIndex": 2
+      },
+      {
+        "nodeIndex": 3
+      },
+      {
+        "nodeIndex": 1,
+        "outputIndex": 0
+      },
+      {
+        "nodeIndex": 9
+      },
+      {
+        "nodeIndex": 0,
+        "outputIndex": 0
+      },
+      {
+        "nodeIndex": 4
+      }
+    ]
+  }
+}
