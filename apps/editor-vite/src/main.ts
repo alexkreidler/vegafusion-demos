@@ -6,6 +6,7 @@ import * as grpcWeb from 'grpc-web';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
+import { VegaFusionRuntimeClient } from "./gen/ServicesServiceClientPb";
 
 function init() {
     monaco_init()
@@ -49,23 +50,19 @@ function init() {
     
     let opts = {}
 
-    const DEVTOOLS_ENABLED = false;
+    const DEVTOOLS_ENABLED = true;
 
-    if (DEVTOOLS_ENABLED) {
-        const devInterceptors = window.__GRPCWEB_DEVTOOLS__ || (() => { });
-        const {
-            devToolsUnaryInterceptor,
-            devToolsStreamInterceptor,
-        } = devInterceptors();
-    
+    if (DEVTOOLS_ENABLED && typeof __gRPC_devtools__ === "object" && __gRPC_devtools__ !== null) {    
+        console.log("Devtools started");
+        
         opts = {
-            unaryInterceptors: [devToolsUnaryInterceptor],
-            streamInterceptors: [devToolsStreamInterceptor],
+            unaryInterceptors: [__gRPC_devtools__.gRPCDevtoolsUnaryInterceptor],
+            streamInterceptors: [__gRPC_devtools__.gRPCDevtoolsStreamInterceptor],
         };
     }
 
-    let client = new grpcWeb.GrpcWebClientBase({ format: "binary", ...opts });
-    let send_message_grpc = vfEmbed.makeGrpcSendMessageFn(client, hostname);
+    let client = new VegaFusionRuntimeClient(hostname, opts);
+    let send_message_grpc = vfEmbed.makeGrpcSendMessageFn(client.client_, hostname);
 
     function update_chart() {
         let msg_receiver;
